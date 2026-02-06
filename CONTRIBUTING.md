@@ -23,7 +23,7 @@ mkdir src/your_method_name
 - `main.coffee` - CoffeeScript
 
 > [!IMPORTANT]
-> **1つのディレクトリには1つのファイルのみ** 配置してください。
+> **1つのディレクトリには1つのmainファイルと任意でREADME.mdのみ** 配置できます。
 
 ### 3. ルールに従う
 
@@ -34,7 +34,7 @@ mkdir src/your_method_name
 | ❌ `for` / `while` / `forEach` 禁止 | ループ構文は使用できません |
 | ❌ 再帰呼び出し禁止 | 関数が自分自身を呼び出すことはできません |
 | 📏 1000バイト以内 | ソースコードのサイズ制限 |
-| 📁 単一ファイル | `src/[dirname]/main.*` 以外のファイルは禁止 |
+| 📁 単一ファイル | `src/[dirname]/main.*` と任意で `README.md` 以外のファイルは禁止 |
 
 ### 4. テストを実行
 
@@ -63,6 +63,7 @@ npm run test:all
 ### 許可される変更
 
 ✅ `src/[dirname]/main.[js|cjs|mjs|ts|coffee]` の追加・編集
+✅ `src/[dirname]/README.md` の追加・編集
 
 ### 禁止される変更
 

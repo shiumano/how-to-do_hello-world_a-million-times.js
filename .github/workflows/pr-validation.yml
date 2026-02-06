@@ -40,6 +40,7 @@ jobs:
               - 'src/**/main.mjs'
               - 'src/**/main.ts'
               - 'src/**/main.coffee'
+              - 'src/**/README.md'
 
       - name: Check for deleted directories
         id: deleted-check
@@ -90,16 +91,21 @@ jobs:
           VALID_DIRS=""
           HAS_INVALID=false
 
-          # Pattern for allowed files
-          ALLOWED_PATTERN="^src/[^/]+/main\.(js|cjs|mjs|ts|coffee)$"
+          # Patterns for allowed files
+          ALLOWED_PATTERN_MAIN="^src/[^/]+/main\.(js|cjs|mjs|ts|coffee)$"
+          ALLOWED_PATTERN_README="^src/[^/]+/README\.md$"
 
           for file in $CHANGED_FILES; do
-            if [[ $file =~ $ALLOWED_PATTERN ]]; then
-              # Extract directory name
+            if [[ $file =~ $ALLOWED_PATTERN_MAIN ]]; then
+              # Extract directory name from main file
               DIR_NAME=$(echo "$file" | sed -E 's|^src/([^/]+)/main\.(js\|cjs\|mjs\|ts\|coffee)$|\1|')
               if [[ ! " $VALID_DIRS " =~ " $DIR_NAME " ]]; then
                 VALID_DIRS="$VALID_DIRS $DIR_NAME"
               fi
+              echo "✅ Allowed: $file"
+            elif [[ $file =~ $ALLOWED_PATTERN_README ]]; then
+              # Extract directory name from README.md
+              DIR_NAME=$(echo "$file" | sed -E 's|^src/([^/]+)/README\.md$|\1|')
               echo "✅ Allowed: $file"
             else
               INVALID_FILES="$INVALID_FILES $file"
@@ -119,7 +125,7 @@ jobs:
               echo "- \`$file\`" >> $GITHUB_STEP_SUMMARY
             done
             echo "" >> $GITHUB_STEP_SUMMARY
-            echo "**Only \`src/[dirname]/main.[js|cjs|mjs|ts|coffee]\` files are allowed.**" >> $GITHUB_STEP_SUMMARY
+            echo "**Only \`src/[dirname]/main.[js|cjs|mjs|ts|coffee]\` and \`src/[dirname]/README.md\` files are allowed.**" >> $GITHUB_STEP_SUMMARY
             echo "has_invalid=true" >> $GITHUB_OUTPUT
           else
             echo "### ✅ All Changed Files Valid" >> $GITHUB_STEP_SUMMARY
@@ -190,7 +196,7 @@ jobs:
 
             if (hasInvalidFiles) {
               body += '### 📁 Invalid File Changes\n';
-              body += 'Only `src/[dirname]/main.[js|cjs|mjs|ts|coffee]` files are allowed to be changed.\n\n';
+              body += 'Only `src/[dirname]/main.[js|cjs|mjs|ts|coffee]` and `src/[dirname]/README.md` files are allowed to be changed.\n\n';
             }
 
             if (testFailed) {

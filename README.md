@@ -18,7 +18,7 @@
 | 1 | ❌ ループ禁止 | `for` / `while` / `forEach` は使用不可 |
 | 2 | ❌ 再帰禁止 | 関数の再帰呼び出しは使用不可 |
 | 3 | 📏 1000バイト以内 | ソースコードのファイルサイズ制限 |
-| 4 | 📁 単一ファイル | `src/[dirname]/main.*` のみ許可 |
+| 4 | 📁 単一ファイル | `src/[dirname]/main.*` + `README.md` のみ許可 |
 
 ---
 
@@ -106,7 +106,7 @@ npm test your_method_name
 ```
 
 > [!WARNING]
-> `src/[dirname]/main.*` 以外のファイルを変更するPRは自動的にクローズされます。
+> `src/[dirname]/main.*` と `src/[dirname]/README.md` 以外のファイルを変更するPRは自動的にクローズされます。
 
 ### 貢献者
 
