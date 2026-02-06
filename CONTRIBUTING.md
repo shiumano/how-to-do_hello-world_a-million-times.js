@@ -9,7 +9,7 @@
 `src/` ディレクトリ内に、あなたの実装を説明する名前のディレクトリを作成してください。
 
 ```bash
-mkdir src/your_method_name
+mkdir src/[your_method_name]
 ```
 
 ### 2. メインファイルを作成
@@ -25,7 +25,21 @@ mkdir src/your_method_name
 > [!IMPORTANT]
 > **1つのディレクトリには1つのmainファイルと任意でREADME.mdのみ** 配置できます。
 
-### 3. ルールに従う
+### 3. README.mdを作成（推奨）
+
+実装の理解を助けるため、`README.md` を作成することを推奨します：
+
+```bash
+# src/[your_method_name]/README.md を作成
+```
+
+README.mdには以下を含めてください：
+
+- **実装の概要**（1-2行）
+- **仕組みの簡潔な説明**（日本語または英語）
+- コードブロックは不要（実際のコードはmain.*を参照）
+
+### 4. ルールに従う
 
 あなたのコードは以下のルールに従う必要があります：
 
@@ -35,8 +49,9 @@ mkdir src/your_method_name
 | ❌ 再帰呼び出し禁止 | 関数が自分自身を呼び出すことはできません |
 | 📏 1000バイト以内 | ソースコードのサイズ制限 |
 | 📁 単一ファイル | `src/[dirname]/main.*` と任意で `README.md` 以外のファイルは禁止 |
+| 📝 README.md推奨 | 実装の仕組みを日本語または英語で簡潔に説明すること |
 
-### 4. テストを実行
+### 5. テストを実行
 
 Pull Requestを送信する前に、ローカルでテストを実行してください：
 
@@ -45,13 +60,13 @@ Pull Requestを送信する前に、ローカルでテストを実行してく�
 npm install
 
 # あなたの実装のテスト
-npm test your_method_name
+npm test [your_method_name]
 
 # 全てのテストを実行
 npm run test:all
 ```
 
-### 5. Pull Requestを作成
+### 6. Pull Requestを作成
 
 テストが通過したら、Pull Requestを作成してください。
 
@@ -62,7 +77,7 @@ npm run test:all
 
 ### 許可される変更
 
-✅ `src/[dirname]/main.[js|cjs|mjs|ts|coffee]` の追加・編集
+✅ `src/[dirname]/main.[js|cjs|mjs|ts|coffee]` の追加・編集  
 ✅ `src/[dirname]/README.md` の追加・編集
 
 ### 禁止される変更

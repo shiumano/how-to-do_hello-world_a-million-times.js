@@ -94,13 +94,13 @@ npm run test:watch
 git clone https://github.com/YOUR_USERNAME/how-to-do_hello-world_a-million-times.js.git
 
 # 2. 新しい実装ディレクトリを作成
-mkdir src/your_method_name
+mkdir src/[your_method_name]
 
 # 3. メインファイルを作成
-# src/your_method_name/main.js (or .ts, .coffee, etc.)
+# src/[your_method_name]/main.js (or .ts, .coffee, etc.)
 
 # 4. テストを実行
-npm test your_method_name
+npm test [your_method_name]
 
 # 5. Pull Requestを作成！
 ```
