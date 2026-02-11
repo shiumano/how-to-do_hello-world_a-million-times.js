@@ -40,6 +40,7 @@ jobs:
               - 'src/**/main.mjs'
               - 'src/**/main.ts'
               - 'src/**/main.coffee'
+              - 'src/**/main.ls'
               - 'src/**/README.md'
 
       - name: Check for deleted directories
@@ -54,7 +55,7 @@ jobs:
           DELETED_FILES=$(git diff --name-status origin/${{ github.base_ref }}...HEAD | grep "^D" | awk '{print $2}')
 
           for file in $DELETED_FILES; do
-            if [[ $file =~ ^src/([^/]+)/main\.(js|cjs|mjs|ts|coffee)$ ]]; then
+            if [[ $file =~ ^src/([^/]+)/main\.(js|cjs|mjs|ts|coffee|ls)$ ]]; then
               DIR_NAME="${BASH_REMATCH[1]}"
               DELETED_DIRS="$DELETED_DIRS $DIR_NAME"
               DELETED_COUNT=$((DELETED_COUNT + 1))
@@ -92,13 +93,13 @@ jobs:
           HAS_INVALID=false
 
           # Patterns for allowed files
-          ALLOWED_PATTERN_MAIN="^src/[^/]+/main\.(js|cjs|mjs|ts|coffee)$"
+          ALLOWED_PATTERN_MAIN="^src/[^/]+/main\.(js|cjs|mjs|ts|coffee|ls)$"
           ALLOWED_PATTERN_README="^src/[^/]+/README\.md$"
 
           for file in $CHANGED_FILES; do
             if [[ $file =~ $ALLOWED_PATTERN_MAIN ]]; then
               # Extract directory name from main file
-              DIR_NAME=$(echo "$file" | sed -E 's|^src/([^/]+)/main\.(js\|cjs\|mjs\|ts\|coffee)$|\1|')
+              DIR_NAME=$(echo "$file" | sed -E 's|^src/([^/]+)/main\.(js\|cjs\|mjs\|ts\|coffee\|ls)$|\1|')
               if [[ ! " $VALID_DIRS " =~ " $DIR_NAME " ]]; then
                 VALID_DIRS="$VALID_DIRS $DIR_NAME"
               fi
@@ -184,7 +185,7 @@ jobs:
           fi
 
       - name: Close PR if validation failed
-        if: steps.validate-files.outputs.has_invalid == 'true' || steps.run-tests.outputs.test_failed == 'true'
+        if: (steps.validate-files.outputs.has_invalid == 'true' || steps.run-tests.outputs.test_failed == 'true') && (github.event.pull_request.user.type != 'Bot')
         uses: actions/github-script@v7
         with:
           script: |
@@ -196,7 +197,7 @@ jobs:
 
             if (hasInvalidFiles) {
               body += '### 📁 Invalid File Changes\n';
-              body += 'Only `src/[dirname]/main.[js|cjs|mjs|ts|coffee]` and `src/[dirname]/README.md` files are allowed to be changed.\n\n';
+              body += 'Only `src/[dirname]/main.[js|cjs|mjs|ts|coffee|ls]` and `src/[dirname]/README.md` files are allowed to be changed.\n\n';
             }
 
             if (testFailed) {
